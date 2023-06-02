@@ -75,7 +75,6 @@ function App(): JSX.Element {
     }).then(() => {
       console.log('Promise.then called!!');
     });
-
   }
 
   useEffect(() => {
@@ -87,10 +86,28 @@ function App(): JSX.Element {
           // If you do not await this method, you will not catch the error.
           throwError();
         } catch (e) {
-          console.error('Trying to catch an error inside a promise!!');
+          console.error('(1) Trying to catch an error inside a promise!!');
         }
       }
-      console.log('useEffect calling f() which calls throwError');
+      console.log('useEffect 1 calling f() which calls throwError');
+      f();
+    }
+    return () => {};
+  }, [done]);
+
+  useEffect(() => {
+    console.log('useEffect 2 starts');
+    if (!done) {
+      const f = async () => {
+        setDone(true);
+        try {
+          // If you do not await this method, you will not catch the error.
+          await throwError();
+        } catch (e) {
+          console.error('(2) Trying to catch an error inside a promise!!');
+        }
+      }
+      console.log('useEffect 2 calling f() which calls throwError with await');
       f();
     }
     return () => {};
