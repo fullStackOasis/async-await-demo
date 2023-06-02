@@ -64,27 +64,32 @@ function App(): JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const throwError = async () => {
+    return new Promise((resolve, reject) => {
+      if (1 == 1) {
+        // Always throw an error.
+        // This will cause "Possible Unhandled Promise Rejection"
+        throw new Error('Something went wrong in the promise');
+      }
+      resolve('Promise resolved successfully!!');
+    }).then(() => {
+      console.log('Promise.then called!!');
+    });
+
+  }
+
   useEffect(() => {
-    console.log('useEffect starts');
+    console.log('useEffect 1 starts');
     if (!done) {
       const f = async () => {
         setDone(true);
         try {
-          new Promise((resolve, reject) => {
-            if (1 == 1) {
-              // Always throw an error.
-              // This will cause "Possible Unhandled Promise Rejection"
-              throw new Error('Something went wrong in the promise');
-            }
-            resolve('Promise resolved successfully!!');
-          }).then(() => {
-            console.log('Promise.then called!!');
-          });
+          throwError();
         } catch (e) {
           console.error('Trying to catch an error inside a promise!!');
         }
       }
-      console.log('useEffect calling f()');
+      console.log('useEffect calling f() which calls throwError');
       f();
     }
     return () => {};
