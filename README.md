@@ -31,3 +31,5 @@ Added this:
 So this app always throws an unhandled promise rejecttion error.
 
 The app doesn't crash, however.
+
+Later updates demo the issue where Promise.then is mixed with try/catch. Don't mix Promise.then with try/catch. Either use Promise.then.catch or async/await and try/catch.
