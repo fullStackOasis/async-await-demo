@@ -84,6 +84,7 @@ function App(): JSX.Element {
       const f = async () => {
         setDone(true);
         try {
+          // If you do not await this method, you will not catch the error.
           throwError();
         } catch (e) {
           console.error('Trying to catch an error inside a promise!!');
